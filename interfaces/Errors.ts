@@ -5,3 +5,8 @@ export interface ExpressRootError extends Error {
     status?: number
 }
 
+export interface ListeningError extends Error {
+    syscall: string,
+    code: string,
+}
+
