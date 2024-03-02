@@ -9,3 +9,7 @@ const contactinfoSchema = new Schema<Contactinfo>({
     instaname: { type: String, required: true }
 })
 
+const contactinfomodel = model<Contactinfo>('Contactinfo', contactinfoSchema);
+
+export default contactinfomodel;
+
