@@ -5,6 +5,6 @@ export interface Device {
     devicetype: string,
     os: string,
     ipaddress: string,
-    userid: number,
-    jwtid: number
+    userid: mongoose.Schema.Types.ObjectId,
+    jwtid: mongoose.Schema.Types.ObjectId
 }
