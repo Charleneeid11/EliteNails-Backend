@@ -1,17 +1,22 @@
-import express, { Express, Request, Response, NextFunction } from 'express';
-import { ExpressRootError } from './interfaces/Errors';
+import express, {
+    type Express,
+    type Request,
+    type Response,
+    type NextFunction
+} from 'express';
+import { type ExpressRootError } from './interfaces/Errors';
 import connectDB from './services/db';
+import { config } from 'dotenv';
+import createError from 'http-errors';
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
 
-require('dotenv').config();
-var createError = require('http-errors');
-// var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+import indexRouter from './routes/index';
 
-var indexRouter = require('./routes/index');
+config();
 
-var app: Express = express();
+const app: Express = express();
 const connection = connectDB();
 
 // view engine setup
@@ -36,7 +41,7 @@ app.use(function (
     err: ExpressRootError,
     req: Request,
     res: Response,
-    next: NextFunction,
+    next: NextFunction
 ): void {
     // set locals, only providing error in development
     res.locals.message = err.message;

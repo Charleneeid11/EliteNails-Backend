@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import type mongoose from 'mongoose';
 
 export interface Contactinfo {
     id: mongoose.Schema.Types.ObjectId;

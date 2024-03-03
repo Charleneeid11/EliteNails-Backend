@@ -8,5 +8,14 @@
         "strict": true,
         "skipLibCheck": true
     },
-    "include": ["app.ts", "bin/www.ts", "interfaces/**/*.ts", "routes/**/*.ts"]
+    "include": [
+        "app.ts",
+        "bin/www.ts",
+        "interfaces/**/*.ts",
+        "routes/**/*.ts",
+        "models/**/*.ts",
+        "scripts/**/*.js",
+        "services/**/*.ts",
+        "utils/**/*.ts"
+    ]
 }

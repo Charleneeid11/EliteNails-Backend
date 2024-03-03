@@ -1,5 +1,5 @@
 import mongoose, { Schema, model } from 'mongoose';
-import { Device } from '../interfaces/Device';
+import { type Device } from '../interfaces/Device';
 
 const deviceSchema = new Schema<Device>(
     {
@@ -9,15 +9,15 @@ const deviceSchema = new Schema<Device>(
         userid: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
-            ref: 'User',
+            ref: 'User'
         },
         jwtid: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
-            ref: 'JWT',
-        },
+            ref: 'JWT'
+        }
     },
-    { timestamps: true },
+    { timestamps: true }
 );
 
 const devicemodel = model<Device>('Device', deviceSchema);
