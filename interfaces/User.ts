@@ -1,9 +1,8 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export interface User {
-    id: mongoose.Schema.Types.ObjectId,
-    email: string,
-    password: string,
-    usertype: 'Admin' | 'Employee',
+    id: mongoose.Schema.Types.ObjectId;
+    email: string;
+    password: string;
+    usertype: 'Admin' | 'Employee';
 }
-

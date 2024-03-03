@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export interface Category {
-    id: mongoose.Schema.Types.ObjectId,
-    name: String
+    id: mongoose.Schema.Types.ObjectId;
+    name: String;
 }
