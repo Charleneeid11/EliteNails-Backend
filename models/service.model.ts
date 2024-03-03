@@ -1,5 +1,5 @@
 import mongoose, { Schema, model } from 'mongoose';
-import { Service } from '../interfaces/Service';
+import { type Service } from '../interfaces/Service';
 
 const serviceSchema = new Schema<Service>(
     {
@@ -8,10 +8,10 @@ const serviceSchema = new Schema<Service>(
         categoryid: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
-            ref: 'Category',
-        },
+            ref: 'Category'
+        }
     },
-    { timestamps: true },
+    { timestamps: true }
 );
 
 const servicemodel = model<Service>('User', serviceSchema);
