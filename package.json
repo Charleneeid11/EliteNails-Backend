@@ -3,11 +3,11 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "start": "node dist/app.js",
+        "start": "node dist/bin/www.js",
         "develop": "nodemon",
         "build": "tsc",
         "watch": "tsc --watch",
-        "dev": "concurrently \"npm run watch\" \"npm run develop\" \"npm run pretty\"",
+        "dev": "concurrently \"npm run watch\" \"npm run develop\"",
         "pretty": "node scripts/watchAndPrettify.js",
         "lint": "eslint . --ext .ts,.tsx"
     },
