@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import express, {
     type Express,
     type Request,
@@ -13,10 +15,12 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
 import indexRouter from './routes/index';
+import serviceRouter from './routes/services.route';
 
 config();
 
 const app: Express = express();
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const connection = connectDB();
 
 // view engine setup
@@ -30,6 +34,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/services', serviceRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
