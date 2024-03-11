@@ -16,6 +16,8 @@ import logger from 'morgan';
 
 import indexRouter from './routes/index';
 import serviceRouter from './routes/services.route';
+import categoryRouter from './routes/categories.route';
+import contactinfoRouter from './routes/contactinfo.route';
 
 config();
 
@@ -35,6 +37,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/services', serviceRouter);
+app.use('/categories', categoryRouter);
+app.use('/contactinfo', contactinfoRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

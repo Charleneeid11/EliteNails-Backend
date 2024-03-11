@@ -5,4 +5,5 @@ export interface Service {
     name: string;
     price: number;
     categoryid: mongoose.Schema.Types.ObjectId;
+    gender: string;
 }

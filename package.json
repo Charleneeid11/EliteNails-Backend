@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "start": "node dist/bin/www.js",
-        "develop": "nodemon",
+        "chachi": "nodemon",
         "build": "tsc",
         "watch": "tsc --watch",
         "dev": "concurrently \"npm run watch\" \"npm run develop\"",

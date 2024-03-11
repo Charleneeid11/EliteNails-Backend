@@ -16,6 +16,7 @@
         "models/**/*.ts",
         "scripts/**/*.js",
         "services/**/*.ts",
-        "utils/**/*.ts"
+        "utils/**/*.ts",
+        "controllers/**/*.ts"
     ]
 }

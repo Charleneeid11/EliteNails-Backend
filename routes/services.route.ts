@@ -7,5 +7,6 @@ router.get('/', ServiceController.getAllServices);
 router.post('/', ServiceController.createService);
 router.delete('/:serviceId', ServiceController.deleteService);
 router.put('/:serviceId', ServiceController.editService);
+router.get('/gender', ServiceController.getServiceByGender);
 
 export default router;

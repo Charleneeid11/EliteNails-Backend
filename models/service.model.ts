@@ -9,7 +9,8 @@ const serviceSchema = new Schema<Service>(
             type: mongoose.Schema.Types.ObjectId,
             required: true,
             ref: 'Category'
-        }
+        },
+        gender: { type: String, required: true, enum: ['Male', 'Female', 'Both'] }
     },
     { timestamps: true }
 );
