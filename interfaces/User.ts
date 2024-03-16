@@ -5,4 +5,6 @@ export interface User {
     email: string;
     password: string;
     usertype: 'Admin' | 'Employee';
+    code: number;
+    verified: boolean;
 }

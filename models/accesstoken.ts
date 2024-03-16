@@ -1,7 +1,7 @@
 import mongoose, { Schema, model } from 'mongoose';
 import { type Token } from '../interfaces/Token';
 
-const tokenSchema = new Schema<Token>(
+const accessTokenSchema = new Schema<Token>(
     {
         userid: {
             type: mongoose.Schema.Types.ObjectId,
@@ -15,6 +15,6 @@ const tokenSchema = new Schema<Token>(
     { timestamps: true }
 );
 
-const tokenmodel = model<Token>('Token', tokenSchema);
+const accesstokenmodel = model<Token>('AccessToken', accessTokenSchema);
 
-export default tokenmodel;
+export default accesstokenmodel;

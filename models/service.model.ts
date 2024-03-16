@@ -15,6 +15,6 @@ const serviceSchema = new Schema<Service>(
     { timestamps: true }
 );
 
-const servicemodel = model<Service>('User', serviceSchema);
+const servicemodel = model<Service>('Service', serviceSchema);
 
 export default servicemodel;

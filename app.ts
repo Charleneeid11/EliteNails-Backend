@@ -18,6 +18,7 @@ import indexRouter from './routes/index';
 import serviceRouter from './routes/services.route';
 import categoryRouter from './routes/categories.route';
 import contactinfoRouter from './routes/contactinfo.route';
+import authRouter from './routes/auth.route';
 
 config();
 
@@ -39,6 +40,7 @@ app.use('/', indexRouter);
 app.use('/services', serviceRouter);
 app.use('/categories', categoryRouter);
 app.use('/contactinfo', contactinfoRouter);
+app.use('/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
