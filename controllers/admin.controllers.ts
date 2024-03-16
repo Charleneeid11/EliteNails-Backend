@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import sendEmail from '../services/email';
 import { type ObjectId } from 'mongodb';
 import { type User } from '../interfaces/User';
+import { generateAccessToken, generateRefreshToken } from '../services/jwt.service';
 
 const register = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -44,7 +45,7 @@ const verify = async (req: Request, res: Response): Promise<void> => {
 
 const getUsers = async (req: Request, res: Response): Promise<void> => {
     try {
-        const users: User [] = await UserModel.find();
+        const users: User[] = await UserModel.find();
         res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ error: 'An error occurred while attempting to fetch all users.' });
@@ -65,9 +66,36 @@ const deleteUser = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
+const login = async (req: Request, res: Response): Promise<void> => {
+    try {
+        // get data from request
+        const { email, password } = req.body as { email: string, password: string };
+        // validate user exists
+        const userFound: User[] | null = await UserModel.find({ email });
+        if (userFound === null) {
+            res.status(400).json({ error: 'No user is found with this email' });
+            return;
+        }
+        //  compare passwords using bcrypt
+        const comparison = await bcrypt.compare(password, userFound[0].password);
+        if (!comparison) {
+            res.status(400).json({ error: 'Incorrect password' });
+            return;
+        }
+        // create access token
+        const accesstoken: string = generateAccessToken(userFound[0]._id);
+        // create refresh token
+        const refreshtoken: string = generateRefreshToken(userFound[0]._id);
+        res.status(200).json({ accesstoken, refreshtoken });
+    } catch (error) {
+        res.status(500).json({ error: 'An error occurred while attempting to login.' });
+    }
+};
+
 export default {
     register,
     verify,
     getUsers,
-    deleteUser
+    deleteUser,
+    login
 };
