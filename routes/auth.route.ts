@@ -8,4 +8,6 @@ router.post('/verify', AdminController.verify);
 router.get('/', AdminController.getUsers);
 router.delete('/:userid', AdminController.deleteUser);
 router.post('/login', AdminController.login);
+router.put('/:userid', AdminController.editAccount);
+
 export default router;

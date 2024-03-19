@@ -5,6 +5,11 @@ import sendEmail from '../services/email';
 import { type ObjectId } from 'mongodb';
 import { type User } from '../interfaces/User';
 import { generateAccessToken, generateRefreshToken } from '../services/jwt.service';
+import JwtModel from '../models/jwt.model';
+import summarizeAndStoreDeviceInfo from '../services/useragent.service';
+import { type DeviceSummary } from '../interfaces/Device';
+import geoip, { type Lookup } from 'geoip-lite';
+import DeviceModel from '../models/device.model';
 
 const register = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -76,19 +81,61 @@ const login = async (req: Request, res: Response): Promise<void> => {
             res.status(400).json({ error: 'No user is found with this email' });
             return;
         }
+        const userid = userFound[0]._id;
         //  compare passwords using bcrypt
         const comparison = await bcrypt.compare(password, userFound[0].password);
         if (!comparison) {
             res.status(400).json({ error: 'Incorrect password' });
             return;
         }
-        // create access token
-        const accesstoken: string = generateAccessToken(userFound[0]._id);
-        // create refresh token
-        const refreshtoken: string = generateRefreshToken(userFound[0]._id);
+        const { token: accesstoken, expiryDate: accessExpiryDate } =
+            generateAccessToken(userFound[0]._id);
+        const newAccessToken = new JwtModel({
+            userid,
+            token: accesstoken,
+            expirydate: accessExpiryDate,
+            revoked: false,
+            type: 'Access'
+        });
+        await newAccessToken.save();
+        // create refresh token and store in db
+        const { token: refreshtoken, expiryDate: refreshExpiryDate } =
+            generateRefreshToken(userFound[0]._id);
+        const newRefreshToken = new JwtModel({
+            userid,
+            token: refreshtoken,
+            expirydate: refreshExpiryDate,
+            revoked: false,
+            type: 'Refresh'
+        });
+        await newRefreshToken.save();
+        // create access token and store in db
+        const deviceDetails: DeviceSummary = summarizeAndStoreDeviceInfo(req.useragent);
+        const locationData: Lookup | null = geoip.lookup(req.ip ?? '0.0.0.0');
+        const country = locationData?.country;
+        const city = locationData?.city;
+        const location = `${city}, ${country}`;
+        const device = new DeviceModel({ devicetype: deviceDetails.deviceType, os: deviceDetails.operatingSystem, location, userid, accessid: newAccessToken._id, refreshid: newRefreshToken._id });
+        await device.save();
         res.status(200).json({ accesstoken, refreshtoken });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: 'An error occurred while attempting to login.' });
+    }
+};
+
+const editAccount = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { email, usertype } = req.body as { email: string, usertype: string };
+        const userid = req.params.userid;
+        const userUpdated = await UserModel.findByIdAndUpdate(userid, { email, usertype });
+        if (userUpdated === null) {
+            res.status(400).json({ error: 'User to be edited not found.' });
+            return;
+        }
+        res.status(200).json({ message: 'User was updated successfully.' });
+    } catch (error) {
+        res.status(500).json({ error: 'An error occurred while attempting to edit user.' });
     }
 };
 
@@ -97,5 +144,6 @@ export default {
     verify,
     getUsers,
     deleteUser,
-    login
+    login,
+    editAccount
 };

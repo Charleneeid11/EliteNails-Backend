@@ -5,13 +5,18 @@ const deviceSchema = new Schema<Device>(
     {
         devicetype: { type: String, required: true },
         os: { type: String, required: true },
-        ipaddress: { type: String, required: true },
+        location: { type: String, required: true },
         userid: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
             ref: 'User'
         },
-        jwtid: {
+        accessid: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: 'JWT'
+        },
+        refreshid: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
             ref: 'JWT'

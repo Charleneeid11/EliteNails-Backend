@@ -4,7 +4,13 @@ export interface Device {
     id: mongoose.Schema.Types.ObjectId;
     devicetype: string;
     os: string;
-    ipaddress: string;
+    location: string;
     userid: mongoose.Schema.Types.ObjectId;
-    jwtid: mongoose.Schema.Types.ObjectId;
+    accessid: mongoose.Schema.Types.ObjectId;
+    refreshid: mongoose.Schema.Types.ObjectId;
+}
+
+export interface DeviceSummary {
+    deviceType: string;
+    operatingSystem: string;
 }

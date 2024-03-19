@@ -10,7 +10,8 @@ const tokenSchema = new Schema<Token>(
         },
         token: { type: String, required: true },
         expirydate: { type: Date, required: true },
-        revoked: { type: Boolean, required: true }
+        revoked: { type: Boolean, required: true },
+        type: { type: String, required: true, enum: ['Access', 'Refresh'] }
     },
     { timestamps: true }
 );

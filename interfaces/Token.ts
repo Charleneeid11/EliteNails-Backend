@@ -6,5 +6,11 @@ export interface Token {
     token: string;
     expirydate: Date;
     creationdate: Date;
+    type: string;
     revoked: boolean;
+}
+
+export interface tokenReturn {
+    token: string;
+    expiryDate: Date;
 }

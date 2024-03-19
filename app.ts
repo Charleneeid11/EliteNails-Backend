@@ -19,6 +19,8 @@ import serviceRouter from './routes/services.route';
 import categoryRouter from './routes/categories.route';
 import contactinfoRouter from './routes/contactinfo.route';
 import authRouter from './routes/auth.route';
+import deviceRouter from './routes/device.route';
+import useragent from 'express-useragent';
 
 config();
 
@@ -35,12 +37,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(useragent.express());
 
 app.use('/', indexRouter);
 app.use('/services', serviceRouter);
 app.use('/categories', categoryRouter);
 app.use('/contactinfo', contactinfoRouter);
 app.use('/auth', authRouter);
+app.use('/device', deviceRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
