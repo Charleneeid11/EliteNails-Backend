@@ -17,14 +17,11 @@ const getAllServices = async (req: Request, res: Response): Promise<void> => {
 const createService = async (req: Request, res: Response): Promise<void> => {
     try {
         const { name, price, categoryid, gender } = req.body as { name: string, price: number, categoryid: ObjectId, gender: string };
-        // find if category exists.
         const category: Category | null = await categorymodel.findById(categoryid);
-        // if it doesnt then respond with bad request status
         if (category === null) {
             res.status(400).json({ error: 'Category is not found.' });
             return;
         }
-        // if it exists create the service
         const newService = new ServiceModel({
             name,
             price,
@@ -71,7 +68,7 @@ const editService = async (req: Request, res: Response): Promise<void> => {
 
 const getServiceByGender = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { gender } = req.body as { gender: string };
+        const { gender } = req.params as { gender: string };
         const servicesneeded: Service [] = await ServiceModel.find({ gender: { $in: [gender, 'Both'] } });
         res.status(200).json(servicesneeded);
     } catch (error) {

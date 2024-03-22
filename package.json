@@ -12,6 +12,9 @@
         "lint": "eslint . --ext .ts,.tsx"
     },
     "dependencies": {
+        "@hapi/joi": "^17.1.1",
+        "@reis/joi-object-id": "^3.0.0",
+        "@types/joi": "^17.2.3",
         "@types/jsonwebtoken": "^9.0.6",
         "bcrypt": "^5.1.1",
         "cookie-parser": "~1.4.4",
@@ -22,6 +25,8 @@
         "geoip-lite": "^1.4.10",
         "http-errors": "~1.6.3",
         "jade": "^0.31.2",
+        "joi": "^17.12.2",
+        "joi-objectid": "^4.0.2",
         "jsonwebtoken": "^9.0.2",
         "mongodb": "^6.4.0",
         "mongoose": "^8.2.0",

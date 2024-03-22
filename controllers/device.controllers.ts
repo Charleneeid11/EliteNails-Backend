@@ -1,4 +1,4 @@
-import { type Request, Response } from 'express';
+import { type Request, type Response } from 'express';
 import DeviceModel from '../models/device.model';
 import JWTModel from '../models/jwt.model';
 

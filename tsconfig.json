@@ -9,6 +9,7 @@
         "skipLibCheck": true
     },
     "include": [
+        "validation/**/*.ts",
         "app.ts",
         "bin/www.ts",
         "interfaces/**/*.ts",
@@ -17,6 +18,7 @@
         "scripts/**/*.js",
         "services/**/*.ts",
         "utils/**/*.ts",
-        "controllers/**/*.ts"
+        "controllers/**/*.ts",
+        "middlewares/**/*.ts"
     ]
 }
