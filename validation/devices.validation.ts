@@ -1,10 +1,5 @@
-import { extendedJoi } from './joiObjectId';
+import Joi from 'joi';
 
-const logoutDeviceSchema = extendedJoi.object({
-    deviceId: extendedJoi.ObjectId().required().messages({
-        'objectId.base': 'Device ID must be a valid ObjectId',
-        'any.required': 'Device ID is required'
-    })
+export const logoutDeviceSchema = Joi.object({
+    _id: Joi.string().required()
 });
-
-module.exports = { logoutDeviceSchema };

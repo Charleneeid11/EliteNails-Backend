@@ -1,5 +1,6 @@
 import mongoose, { Schema, model } from 'mongoose';
 import { type Token } from '../interfaces/Token';
+// JP
 
 const tokenSchema = new Schema<Token>(
     {

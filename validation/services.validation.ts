@@ -1,11 +1,11 @@
-import { extendedJoi } from './joiObjectId';
+import Joi from 'joi';
 
-const createServiceSchema = extendedJoi.object({
-    name: extendedJoi
+export const createServiceSchema = Joi.object({
+    name: Joi
         .string()
         .required()
         .messages({ 'string.empty': 'Name is required' }),
-    price: extendedJoi
+    price: Joi
         .number()
         .required()
         .min(0)
@@ -14,12 +14,14 @@ const createServiceSchema = extendedJoi.object({
             'number.base': 'Price is required',
             'number.empty': 'Price is required'
         }),
-    categoryid: extendedJoi
-        .objectId()
+    categoryid: Joi
+        .string()
         .required()
-        .message('Category ID must be a valid ObjectId')
-        .messages({ 'any.required': 'Category ID is required.' }),
-    gender: extendedJoi
+        .messages({
+            'string.base': 'Category ID must be a valid string',
+            'any.required': 'Category ID is required.'
+        }),
+    gender: Joi
         .string()
         .required()
         .valid('Female', 'Male', 'Both')
@@ -30,16 +32,13 @@ const createServiceSchema = extendedJoi.object({
         })
 });
 
-const editServiceSchema = extendedJoi.object({
-    serviceId: extendedJoi.objectId().required().messages({
-        'objectId.base': 'Service ID must be a valid ObjectId',
-        'any.required': 'Service ID is required'
-    }),
-    name: extendedJoi
+export const editServiceSchema = Joi.object({
+    serviceId: Joi.string().required(),
+    name: Joi
         .string()
         .required()
         .messages({ 'string.empty': 'Name is required' }),
-    price: extendedJoi
+    price: Joi
         .number()
         .required()
         .min(0)
@@ -48,15 +47,14 @@ const editServiceSchema = extendedJoi.object({
             'number.base': 'Price is required',
             'number.empty': 'Price is required'
         }),
-    categoryid: extendedJoi
-        .objectId()
+    categoryid: Joi
+        .string()
         .required()
-        .message('Category ID must be a valid ObjectId')
         .messages({
-            'objectId.base': 'Catgeory ID must be a valid ObjectId',
+            'string.base': 'Catgeory ID must be a valid string',
             'any.required': 'Category ID is required'
         }),
-    gender: extendedJoi
+    gender: Joi
         .string()
         .required()
         .valid('Female', 'Male', 'Both')
@@ -67,19 +65,13 @@ const editServiceSchema = extendedJoi.object({
         })
 });
 
-const getServiceByGenderSchema = extendedJoi.object({
-    gender: extendedJoi
+export const getServiceByGenderSchema = Joi.object({
+    gender: Joi
         .string()
         .required()
         .valid('Female', 'Male', 'Both')
-        .messages({
-            'string.base': 'Gender must be a string',
-            'any.required': 'Gender is required'
-        })
 });
 
-module.exports = {
-    createServiceSchema,
-    editServiceSchema,
-    getServiceByGenderSchema
-};
+export const deleteServiceSchema = Joi.object({
+    serviceId: Joi.string().required()
+});

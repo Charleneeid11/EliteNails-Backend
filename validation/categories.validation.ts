@@ -1,32 +1,20 @@
-import { extendedJoi } from './joiObjectId';
+import Joi from 'joi';
 
-const createCategorySchema = extendedJoi.object({
-    name: extendedJoi.string().required().messages({
+export const createCategorySchema = Joi.object({
+    name: Joi.string().required().messages({
         'string.empty': 'Name of category is required.',
-        'string.base': 'Name of category is required.'
+        'string.base': 'Name of category must be a string.'
     })
 });
 
-const editCategorySchema = extendedJoi.object({
-    categoryID: extendedJoi.ObjectId().required().messages({
-        'objectId.base': 'Category ID must be a valid ObjectId',
-        'any.required': 'Category ID is required'
-    }),
-    name: extendedJoi.string().required().messages({
+export const editCategorySchema = Joi.object({
+    categoryid: Joi.string().required(),
+    name: Joi.string().required().messages({
         'string.empty': 'Name of category is required.',
-        'string.base': 'Name of category is required.'
+        'string.base': 'Name of category must be a string.'
     })
 });
 
-const deleteCategorySchema = extendedJoi.object({
-    categoryId: extendedJoi.ObjectId().required().messages({
-        'objectId.base': 'Category ID must be a valid ObjectId',
-        'any.required': 'Catgory ID is required'
-    })
+export const deleteCategorySchema = Joi.object({
+    categoryid: Joi.string().required()
 });
-
-module.exports = {
-    createCategorySchema,
-    editCategorySchema,
-    deleteCategorySchema
-};

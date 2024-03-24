@@ -1,5 +1,4 @@
 import { type Request, type Response, type NextFunction } from 'express';
-import { extendedJoi } from '../validation/joiObjectId';
 import { type Schema, type ValidationError } from 'joi';
 
 const middleware = (schema: Schema) => {
@@ -8,11 +7,10 @@ const middleware = (schema: Schema) => {
             ...req.params,
             ...req.body
         };
-        const { error }: { error: ValidationError } = extendedJoi.validate(
-            wholeRequest,
-            schema
-        );
-        const valid = error === null;
+        console.log(wholeRequest);
+        const { error }: { error: ValidationError | undefined } = schema.validate(wholeRequest);
+        console.log('error:', error);
+        const valid = error === undefined;
 
         if (valid) {
             next();

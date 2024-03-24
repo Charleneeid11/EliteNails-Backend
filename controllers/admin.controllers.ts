@@ -14,6 +14,10 @@ import DeviceModel from '../models/device.model';
 const register = async (req: Request, res: Response): Promise<void> => {
     try {
         const { email, password } = req.body as { email: string, password: string };
+        const userWithThatEmail = await UserModel.find({ email });
+        if (userWithThatEmail !== null) {
+            res.status(400).json({ error: 'A user with that email already exists, login instead?' });
+        }
         const hashedPassword = await bcrypt.hash(password, 10);
         const code = Math.floor(100000 + Math.random() * 900000);
         const content = `Welcome to Elite Nails Studio Admin Panel!\n\n This is your 6 digit verification code: ${code}\nBest\nElite Nails System.`;
@@ -21,7 +25,7 @@ const register = async (req: Request, res: Response): Promise<void> => {
         await sendEmail(email, 'Elite Nails-Verification Code', content);
         const user = new UserModel({ email, password: hashedPassword, usertype: 'Employee', code, verified: false });
         await user.save();
-        res.status(200).json({ message: 'A 6 digit verification code has been sent to your email.' });
+        res.status(200).json({ message: 'A 6 digit verification code has been sent to your email.', user });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'An error occurred while attempting to register.' });
@@ -73,16 +77,13 @@ const deleteUser = async (req: Request, res: Response): Promise<void> => {
 
 const login = async (req: Request, res: Response): Promise<void> => {
     try {
-        // get data from request
         const { email, password } = req.body as { email: string, password: string };
-        // validate user exists
         const userFound: User[] | null = await UserModel.find({ email });
         if (userFound === null) {
             res.status(400).json({ error: 'No user is found with this email' });
             return;
         }
         const userid = userFound[0]._id;
-        //  compare passwords using bcrypt
         const comparison = await bcrypt.compare(password, userFound[0].password);
         if (!comparison) {
             res.status(400).json({ error: 'Incorrect password' });
